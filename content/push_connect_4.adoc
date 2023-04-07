@@ -8,5 +8,5 @@
 
 [source,java]
 ----
-include::PushConnectFour.java
+include::source/PushConnectFour.java[]
 ----
