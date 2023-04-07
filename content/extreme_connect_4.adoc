@@ -1,0 +1,12 @@
+= Push Connect 4
+
+== Question
+
+== Explanation
+
+== Solution
+
+[source,java]
+----
+include::source/PushConnectFour.java[]
+----

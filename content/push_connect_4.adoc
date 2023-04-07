@@ -1,12 +1,38 @@
-= Push Connect 4
+= Extreme Connect 4
 
 == Question
 
+=== Background
+
+Extreme Connect 4 is a variant of Connect 4 in which:
+
+* The rows and columns are infinite
+* Players place chips at the **bottom** of the stack and push all chips above it up
+* Players take turns placing chips; the first player to get four consecutive chips in a row or column wins (diagonals do not matter)
+
+=== Task
+
+Implement a function that takes in a player and position and returns the winner.
+
 == Explanation
+
+In a normal game of connect 4, an array is a good option since the board is a fixed structure and you can quickly access each position.
+Since we only need to check for 4 in a row, the program can count the number of chips of the same color to the left, right, above, and below it to determine if there is a winner.
+This board is infinite though, so allocating an 2-D array of maximum size is a huge waste of space.
+We need something more dynamic that can hold chips in columns at the far-left (negative infinity) and the far-right (positive infinity).
+We also need to be able to efficiently access the columns so we can insert chips in arbitrary columns.
+With this in mind, a map makes sense to represent the board with keys being the indices of the columns.
+But what should be used for the columns?
+
+=== Tricky Parts
+
+Since chips are moved up, it's possible both players to actually win in one move.
+We should bring this up with the interviewer, and discuss how to resolve ties.
+In this solution, we will wins in lower rows will have priority.
 
 == Solution
 
 [source,java]
 ----
-include::source/PushConnectFour.java[]
+include::source/ExtremeConnectFour.java[]
 ----
