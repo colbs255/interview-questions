@@ -4,4 +4,4 @@ Explanations and solutions to interview questions
 
 == Questions
 
-xref:push_connect_4.adoc[Push Connect 4]
+xref:extreme_connect_4.adoc[Extreme Connect 4]
