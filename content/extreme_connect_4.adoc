@@ -32,6 +32,7 @@ In this solution, we will wins in lower rows will have priority.
 
 == Solution
 
+.ExtremeConnectFour.java
 [source,java]
 ----
 include::src/ExtremeConnectFour.java[]
