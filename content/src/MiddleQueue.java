@@ -57,7 +57,8 @@ class MiddleQueue<T> {
     }
 
     public T popFront(T item) {
-        return null;
+        var value = remove(front.next);
+        return value;
     }
 
     public T popMiddle(T item) {
@@ -65,7 +66,16 @@ class MiddleQueue<T> {
     }
 
     public T popBack(T item) {
-        return null;
+        var value = remove(back.prev);
+        return value;
+    }
+
+    private T remove(Node<T> node) {
+        var value = node.value;
+        node.prev.next = node.next;
+        node.next.prev = node.prev;
+        size--;
+        return value;
     }
 
     public List<T> asList() {
