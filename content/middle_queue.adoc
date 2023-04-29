@@ -24,10 +24,12 @@ There are 2 implementations for queues:
 
 If we implement the queue with an array, finding the middle element is trivial, but removals are not very efficient.
 Potentially every element in the array could be shifted over for a single remove operation.
-A linked-list does not have this problem so we will use that.
+A linked-list does not have this problem, so we will use that.
 Since we need to perform push/pop operations on front, middle, and end, we should maintain references to each of those positions.
 Our linked-list should also be doubly-linked to support removals.
-The tricky part of the question is ensuring your references are updates properly, 
+The tricky part of the question is ensuring your references are updates properly;
+I recommend drawing simple examples and walking through how the middle should be updated after each operation.
+The way the middle pointer is updated is dependent on both how many elements are in the structure and what operation is occurring.
 
 == Solution
 
