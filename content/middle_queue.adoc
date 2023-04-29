@@ -1,0 +1,40 @@
+= Front Middle Back Queue
+
+== Question
+
+Implement a queue with the following operations:
+
+[horizontal]
+pushFront:: add value to front of queue
+pushMiddle:: add value to middle of queue
+pushBack:: add value to back of queue
+popFront:: remove front value from queue
+popMiddle:: remove middle value from queue
+pushBack:: remove back value from queue
+
+When there are two middle position choices, the operation is performed on the front-most middle position choice.
+For example, in a queue with 4 elements, the middle is the 2nd element.
+
+== Explanation
+
+There are 2 implementations for queues:
+
+* arrays
+* linked lists
+
+If we implement the queue with an array, finding the middle element is trivial, but removals are not very efficient.
+Potentially every element in the array could be shifted over for a single remove operation.
+A linked-list does not have this problem, so we will use that.
+Since we need to perform push/pop operations on front, middle, and end, we should maintain references to each of those positions.
+Our linked-list should also be doubly-linked to support removals.
+The tricky part of the question is ensuring your references are updates properly;
+I recommend drawing simple examples and walking through how the middle should be updated after each operation.
+The way the middle pointer is updated is dependent on both how many elements are in the structure and what operation is occurring.
+
+== Solution
+
+.MiddleQueue.java
+[source,java]
+----
+include::src/MiddleQueue.java[]
+----

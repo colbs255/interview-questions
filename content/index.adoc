@@ -4,4 +4,5 @@ Explanations and solutions to interview questions
 
 == Questions
 
-xref:extreme_connect_4.adoc[Extreme Connect 4]
+* xref:extreme_connect_4.adoc[Extreme Connect 4]
+* xref:middle_queue.adoc[Front Middle Back Queue]
