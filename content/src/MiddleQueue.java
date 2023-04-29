@@ -1,9 +1,10 @@
 import java.util.*;
 class MiddleQueue<T> {
 
-    private Node<T> front;
+    private final Node<T> front;
+    private final Node<T> back;
+
     private Node<T> middle;
-    private Node<T> back;
 
     private int size;
 
@@ -56,17 +57,30 @@ class MiddleQueue<T> {
         size++;
     }
 
-    public T popFront(T item) {
+    public T popFront() {
         var value = remove(front.next);
+        if (size == 0) {
+            middle = back;
+        } else if (size % 2 == 0) {
+            middle = middle.next;
+        }
         return value;
     }
 
-    public T popMiddle(T item) {
-        return null;
+    public T popMiddle() {
+        var value = remove(middle);
+        // TODO: mutate middle
+        return value;
     }
 
-    public T popBack(T item) {
+    public T popBack() {
         var value = remove(back.prev);
+        // TODO: mutate middle
+        if (size == 0) {
+            middle = back;
+        } else if (size % 2 != 0) {
+            middle = middle.prev;
+        }
         return value;
     }
 
@@ -115,6 +129,11 @@ class MiddleQueue<T> {
         q.pushMiddle(9);
         q.pushMiddle(8);
         assertThat(q.asList()).isEqualTo(List.of(1, 5, 6, 8, 9, 10, 10, 5, 1));
+        System.out.println(q.asList());
+        q.popFront();
+        q.popFront();
+        q.popFront();
+        System.out.println(q.asList());
     }
 
     interface Validator<T> {
