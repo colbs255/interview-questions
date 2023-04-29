@@ -22,7 +22,7 @@ class MiddleQueue<T> {
 
         if (size == 1) {
             middle = front.next;
-        } else if (size % 2 == 0) {
+        } else if (sizeIsEven()) {
             middle = middle.prev;
         }
     }
@@ -32,7 +32,7 @@ class MiddleQueue<T> {
 
         if (size == 1) {
             middle = front.next;
-        } else if (size % 2 == 0) {
+        } else if (sizeIsEven()) {
             middle = middle.prev;
         }
     }
@@ -42,9 +42,41 @@ class MiddleQueue<T> {
 
         if (size == 1) {
             middle = front.next;
-        } else if (size % 2 != 0) {
+        } else if (sizeIsOdd()) {
             middle = middle.next;
         }
+    }
+
+    public T popFront() {
+        var value = remove(front.next);
+        if (size == 0) {
+            middle = back;
+        } else if (sizeIsEven()) {
+            middle = middle.next;
+        }
+        return value;
+    }
+
+    public T popMiddle() {
+        var value = remove(middle);
+        if (size == 0) {
+            middle = back;
+        } else if (sizeIsEven()) {
+            middle = middle.prev;
+        } else if (sizeIsOdd()) {
+            middle = middle.next;
+        }
+        return value;
+    }
+
+    public T popBack() {
+        var value = remove(back.prev);
+        if (size == 0) {
+            middle = back;
+        } else if (sizeIsOdd()) {
+            middle = middle.prev;
+        }
+        return value;
     }
 
     private void insertBefore(T value, Node<T> node) {
@@ -57,39 +89,23 @@ class MiddleQueue<T> {
         size++;
     }
 
-    public T popFront() {
-        var value = remove(front.next);
-        if (size == 0) {
-            middle = back;
-        } else if (size % 2 == 0) {
-            middle = middle.next;
-        }
-        return value;
-    }
-
-    public T popMiddle() {
-        var value = remove(middle);
-        // TODO: mutate middle
-        return value;
-    }
-
-    public T popBack() {
-        var value = remove(back.prev);
-        // TODO: mutate middle
-        if (size == 0) {
-            middle = back;
-        } else if (size % 2 != 0) {
-            middle = middle.prev;
-        }
-        return value;
-    }
-
     private T remove(Node<T> node) {
+        if (size == 0) {
+            throw new IllegalStateException("Cannot remove from empty list");
+        }
         var value = node.value;
         node.prev.next = node.next;
         node.next.prev = node.prev;
         size--;
         return value;
+    }
+
+    private boolean sizeIsOdd() {
+        return size % 2 != 0;
+    }
+
+    private boolean sizeIsEven() {
+        return size % 2 == 0;
     }
 
     public List<T> asList() {
@@ -129,11 +145,33 @@ class MiddleQueue<T> {
         q.pushMiddle(9);
         q.pushMiddle(8);
         assertThat(q.asList()).isEqualTo(List.of(1, 5, 6, 8, 9, 10, 10, 5, 1));
-        System.out.println(q.asList());
-        q.popFront();
-        q.popFront();
-        q.popFront();
-        System.out.println(q.asList());
+
+        assertThat(q.popMiddle()).isEqualTo(9);
+        assertThat(q.asList()).isEqualTo(List.of(1, 5, 6, 8, 10, 10, 5, 1));
+
+        assertThat(q.popMiddle()).isEqualTo(8);
+        assertThat(q.asList()).isEqualTo(List.of(1, 5, 6, 10, 10, 5, 1));
+
+        assertThat(q.popMiddle()).isEqualTo(10);
+        assertThat(q.asList()).isEqualTo(List.of(1, 5, 6, 10, 5, 1));
+
+        assertThat(q.popFront()).isEqualTo(1);
+        assertThat(q.asList()).isEqualTo(List.of(5, 6, 10, 5, 1));
+
+        assertThat(q.popBack()).isEqualTo(1);
+        assertThat(q.asList()).isEqualTo(List.of(5, 6, 10, 5));
+
+        assertThat(q.popFront()).isEqualTo(5);
+        assertThat(q.asList()).isEqualTo(List.of(6, 10, 5));
+
+        assertThat(q.popBack()).isEqualTo(5);
+        assertThat(q.asList()).isEqualTo(List.of(6, 10));
+
+        assertThat(q.popFront()).isEqualTo(6);
+        assertThat(q.asList()).isEqualTo(List.of(10));
+
+        assertThat(q.popBack()).isEqualTo(10);
+        assertThat(q.asList()).isEqualTo(List.of());
     }
 
     interface Validator<T> {
