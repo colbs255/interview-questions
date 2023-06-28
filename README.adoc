@@ -1,3 +1,9 @@
 = Interview Questions
 
 Interview questions and my solutions
+
+
+== How to run?
+
+- Install asciidoctor
+- Run `make`
