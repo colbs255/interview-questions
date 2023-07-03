@@ -1,0 +1,20 @@
+= Succession
+
+== Question
+
+=== Background
+
+
+=== Task
+
+== Explanation
+
+=== Tricky Parts
+
+== Solution
+
+.TallestBillboard.java
+[source,java]
+----
+include::src/Succession.java[]
+----
