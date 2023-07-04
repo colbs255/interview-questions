@@ -20,10 +20,12 @@ class Succession {
 
     public void remove(String person) {
         var node = personToNode.get(person);
+        node.parent.children.remove(node.siblingRank);
         for (int childIndex = 0; childIndex < node.children.size(); childIndex++) {
             var childNode = node.children.get(childIndex);
             int newIndex = childIndex + node.siblingRank;
             var updatedNode = new Node(childNode.name, node.parent, newIndex, childNode.children);
+            personToNode.put(childNode.name, updatedNode);
             node.parent.children.add(newIndex, updatedNode);
         }
         personToNode.remove(person);
@@ -33,7 +35,7 @@ class Succession {
         return root.children.get(0).name;
     }
 
-    private static record Node(
+    private record Node(
         String name,
         Node parent,
         int siblingRank,
@@ -48,13 +50,12 @@ class Succession {
 
         @Override
         public String toString() {
-            return "Node{n:" + name + "p: " + parent + "r: " + siblingRank + children + "}";
+            return "Node{name: " + name + ", r: " + siblingRank + ", children: " + children + "}";
         }
     }
 
     public static void main(String[] args) {
         var succession = new Succession("Hogan");
-        System.out.println(succession.root);
         succession.add("Hogan", "Randal");
         succession.add("Hogan", "Liv");
         succession.remove("Hogan");
