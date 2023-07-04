@@ -23,9 +23,8 @@ class Succession {
         for (int childIndex = 0; childIndex < node.children.size(); childIndex++) {
             var childNode = node.children.get(childIndex);
             int newIndex = childIndex + node.siblingRank;
-            childNode.parent = node.parent;
-            childNode.siblingRank = newIndex;
-            node.parent.children.add(newIndex, childNode);
+            var updatedNode = new Node(childNode.name, node.parent, newIndex, childNode.children);
+            node.parent.children.add(newIndex, updatedNode);
         }
         personToNode.remove(person);
     }
@@ -33,31 +32,30 @@ class Succession {
     public String getCEO() {
         return root.children.get(0).name;
     }
-    
-    private static class Node {
 
-        final String name;
-        Node parent;
-        int siblingRank;
-        final List<Node> children;
-
-        public Node(String name, Node parent, int siblingRank, List<Node> children) {
-            this.name = name;
-            this.parent = parent;
-            this.siblingRank = siblingRank;
-            this.children = children;
-        }
+    private static record Node(
+        String name,
+        Node parent,
+        int siblingRank,
+        List<Node> children
+    ) {
 
         private Node addChild(String name) {
             var node = new Node(name, this, children.size(), new ArrayList<>());
             children.add(node);
             return node;
         }
+
+        @Override
+        public String toString() {
+            return "Node{n:" + name + "p: " + parent + "r: " + siblingRank + children + "}";
+        }
     }
 
 
     public static void main(String[] args) {
         var succession = new Succession("Hogan");
+        System.out.println(succession.root);
         succession.add("Hogan", "Randal");
         succession.add("Hogan", "Liv");
         succession.remove("Hogan");

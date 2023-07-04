@@ -35,7 +35,6 @@ add("Hogan", "Liv")       // Hogan has another child: Liv
 remove("Hogan")        
 getCEO()                  // returns Randal since he is the eldest child
 
-
 add("Randal", "Terry")    // Randal has his first child: Terry
 add("Liv", "Frank")       // Liv has her first child: Frank
 
