@@ -5,7 +5,7 @@
 === Background
 
 When the CEO of Paystar Annoyco leaves, a successor must be named.
-Paystar Annoyco has a well defined policy for determining the next CEO:
+Paystar Annoyco determines the CEO with the following policy:
 
 * Parents have priority over their children in being the successor
 * Older siblings have priority over their younger siblings
@@ -18,7 +18,7 @@ Create a structure with the following methods:
 * `add(parent, child)`
     ** adds a parent child relationship
     ** Example: `add("Hogan", "Randal")` means Hogan has a child: Randal
-* `remove(person)``
+* `remove(person)`
     ** removes a person from the line of succession
     ** the current CEO is valid input
 * `getCEO()`
@@ -50,7 +50,42 @@ getCEO()                  // Returns Frank, the last remaining family member
 
 == Explanation
 
-=== Tricky Parts
+=== Add Method
+We need a structure that can keep track of the parent-child relationships and the order of the siblings.
+We also need to support inserting and removing people from the structure - it's not fixed.
+Trees are good candidates for parent-child relationships like this.
+Each node in the tree can represent a person and can store references to all of their children.
+Because the number of children a person can have is unbounded, a binary tree with left and right pointers won't work, we need a dynamic structure to store each child.
+Because the order is important, a list is a good candidate for this.
+Whenever a child is added to structure, we can simply append the child to this list.
+To make this an `O(1)` operation, we can store a map of names to their corresponding node objects.
+Then we can use the map to obtain the corresponding node and add the child.
+
+=== Remove method
+Removing people from the structure is the difficult part of the problem.
+A simple approach would be to mark removed nodes as "removed" and then skip them when determining the successor.
+This creates a memory leak though because nodes are never removed from the structure;
+an optimal solution actually removes the node from the structure.
+When removing person A, their children need to be promoted up a level and we need to ensure their children have higher priority than A's siblings.
+We can do this by replacing person A with their children in their sibling list.
+
+For example, suppose Hogan has 3 children in this order: A, B, C.
+B also has 2 children.
+The current line of succession looks like this: Hogan, A, B, B1, B2, C
+When B is removed, their 2 children will be promoted up a level, replacing B.
+Our line of succession would then look like: Hogan, A, B1, B2, C.
+
+We can use our `nameToNode` map to obtain the node we are removing, but how do we obtain the parent to modify the siblings order?
+Each node can store a reference to its parent so we can obtain the parent and modify their children.
+
+The last trick is we need know the position of the node in relation to its siblings.
+We can accomplish by also storing position index in each node, letting us know their sibling rank.
+
+To make removals easier, we instantiate our structure with a dummy root node where the first child of the root node be the CEO.
+
+=== Get CEO method
+The get CEO method is now the simplest part, just return the first child of the root node.
+The solution is actually very similar to a priority heap in which we simply return the top level node.
 
 == Solution
 
