@@ -9,23 +9,45 @@ Paystar Annoyco has a well defined policy for determining the next CEO:
 
 * Parents have priority over their children in being the successor
 * Older siblings have priority over their younger siblings
-* All children of the
+* All children of the older siblings have priority over children of the younger siblings
 
 === Task
 
-Create a structure with the following 2 methods:
+Create a structure with the following methods:
 
-* `addChild(parent, child)`
+* `add(parent, child)`
     ** adds a parent child relationship
+    ** Example: `add("Hogan", "Randal")` means Hogan has a child: Randal
 * `remove(person)``
-    ** removes a person from line of succession
+    ** removes a person from the line of succession
+    ** the current CEO is valid input
 * `getCEO()`
-    ** return the current CEO
+    ** returns the current CEO
 
+The founder and first CEO of Paystar Annoyco is Hogan.
 
 Example
 
+----
+add("Hogan", "Randal")    // Hogan has a child: Randal
+add("Hogan", "Liv")       // Hogan has another child: Liv
 
+remove("Hogan")        
+getCEO()                  // returns Randal since he is the eldest child
+
+
+add("Randal", "Terry")    // Randal has his first child: Terry
+add("Liv", "Frank")       // Liv has her first child: Frank
+
+remove("Randal")       
+getCEO()                  // Returns Terry, the eldest child of Randal
+
+remove("Liv")        
+getCEO()                  // Still returns Terry since Liv was not CEO
+
+remove("Terry")
+getCEO()                  // Returns Frank, the last remaining family member
+----
 
 == Explanation
 
@@ -33,7 +55,7 @@ Example
 
 == Solution
 
-.TallestBillboard.java
+.Succession.java
 [source,java]
 ----
 include::src/Succession.java[]
