@@ -37,22 +37,12 @@ class Succession {
         return root.children.get(0).name;
     }
 
-    private record Node(
-        String name,
-        Node parent,
-        int siblingRank,
-        List<Node> children
-    ) {
+    private record Node(String name, Node parent, int siblingRank, List<Node> children) {
 
         private Node addChild(String name) {
             var node = new Node(name, this, children.size(), new ArrayList<>());
             children.add(node);
             return node;
-        }
-
-        @Override
-        public String toString() {
-            return "Node{name: " + name + ", r: " + siblingRank + ", children: " + children + "}";
         }
     }
 
