@@ -4,8 +4,28 @@
 
 === Background
 
+When the CEO of Paystar Annoyco leaves, a successor must be named.
+Paystar Annoyco has a well defined policy for determining the next CEO:
+
+* Parents have priority over their children in being the successor
+* Older siblings have priority over their younger siblings
+* All children of the
 
 === Task
+
+Create a structure with the following 2 methods:
+
+* `addChild(parent, child)`
+    ** adds a parent child relationship
+* `remove(person)``
+    ** removes a person from line of succession
+* `getCEO()`
+    ** return the current CEO
+
+
+Example
+
+
 
 == Explanation
 
