@@ -52,7 +52,6 @@ class Succession {
         }
     }
 
-
     public static void main(String[] args) {
         var succession = new Succession("Hogan");
         System.out.println(succession.root);
