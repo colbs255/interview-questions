@@ -21,10 +21,12 @@ class Succession {
     public void remove(String person) {
         var node = personToNode.get(person);
         node.parent.children.remove(node.siblingRank);
+
         for (int childIndex = 0; childIndex < node.children.size(); childIndex++) {
             var childNode = node.children.get(childIndex);
             int newIndex = childIndex + node.siblingRank;
             var updatedNode = new Node(childNode.name, node.parent, newIndex, childNode.children);
+
             personToNode.put(childNode.name, updatedNode);
             node.parent.children.add(newIndex, updatedNode);
         }
