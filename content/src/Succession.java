@@ -3,46 +3,50 @@ import java.util.*;
 class Succession {
 
     private final Node root;
-    private final Map<String, Node> personToNode;
+    private final Map<String, Node> nameToNode;
 
     public Succession(String founder) {
         this.root = new Node(null, null, 0, new ArrayList<>());
-        this.personToNode = new HashMap<>();
+        this.nameToNode = new HashMap<>();
 
-        var childNode = root.addChild(founder);
-        personToNode.put(founder, childNode);
+        Node founderNode = root.addChild(founder);
+        nameToNode.put(founder, founderNode);
     }
 
     public void add(String parent, String child) {
-        var childNode = personToNode.get(parent).addChild(child);
-        personToNode.put(child, childNode);
+        Node childNode = nameToNode.get(parent).addChild(child);
+        nameToNode.put(child, childNode);
     }
 
     public void remove(String person) {
-        var node = personToNode.get(person);
-        node.parent.children.remove(node.siblingRank);
+        Node nodeToRemove = nameToNode.get(person);
+        // Remove the node from the children list of its parent
+        nodeToRemove.parent.children.remove(nodeToRemove.siblingRank);
+        nameToNode.remove(person);
 
-        for (int childIndex = 0; childIndex < node.children.size(); childIndex++) {
-            var childNode = node.children.get(childIndex);
-            int newIndex = childIndex + node.siblingRank;
-            var updatedNode = new Node(childNode.name, node.parent, newIndex, childNode.children);
+        for (int childIndex = 0; childIndex < nodeToRemove.children.size(); childIndex++) {
+            Node childNode = nodeToRemove.children.get(childIndex);
+            int newChildRank = nodeToRemove.siblingRank + childIndex;
+            var updatedNode = new Node(childNode.name, nodeToRemove.parent, newChildRank, childNode.children);
 
-            personToNode.put(childNode.name, updatedNode);
-            node.parent.children.add(newIndex, updatedNode);
+            // Update the node map since we are creating a new node
+            nameToNode.put(childNode.name, updatedNode);
+            // Promote the child up one level to the children of the nodeToRemove's parent, maintaining birth order
+            nodeToRemove.parent.children.add(newChildRank, updatedNode);
         }
-        personToNode.remove(person);
     }
 
     public String getCEO() {
+        // We use a dummy root to make remove operations simpler, so the CEO is the first child of the root
         return root.children.get(0).name;
     }
 
     private record Node(String name, Node parent, int siblingRank, List<Node> children) {
 
         private Node addChild(String name) {
-            var node = new Node(name, this, children.size(), new ArrayList<>());
-            children.add(node);
-            return node;
+            Node childNode = new Node(name, this, children.size(), new ArrayList<>());
+            children.add(childNode);
+            return childNode;
         }
     }
 
