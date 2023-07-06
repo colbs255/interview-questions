@@ -21,6 +21,7 @@ Create a structure with the following methods:
 * `remove(person)`
     ** removes a person from the line of succession
     ** the current CEO is valid input
+    ** Example: `remove("Randal")` means Randal is no longer in the line of sucession
 * `getCEO()`
     ** returns the current CEO
 
@@ -48,6 +49,11 @@ remove("Terry")
 getCEO()                  // Returns Frank, the last remaining family member
 ----
 
+You may assume the following:
+
+* Remove calls will only remove people that are currently in the line of succession
+* The parent in every add call is already in the line of succession
+
 == Explanation
 
 === Add Method
@@ -57,7 +63,7 @@ Trees are good candidates for parent-child relationships like this.
 Each node in the tree can represent a person and can store references to all of their children.
 Because the number of children a person can have is unbounded, a binary tree with left and right pointers won't work, we need a dynamic structure to store each child.
 Because the order is important, a list is a good candidate for this.
-Whenever a child is added to structure, we can simply append the child to this list.
+Whenever a child is added to the structure, we can simply append the child to this list.
 To make this an `O(1)` operation, we can store a map of names to their corresponding node objects.
 Then we can use the map to obtain the corresponding node and add the child.
 
@@ -66,7 +72,7 @@ Removing people from the structure is the difficult part of the problem.
 A simple approach would be to mark removed nodes as "removed" and then skip them when determining the successor.
 This creates a memory leak though because nodes are never removed from the structure;
 an optimal solution actually removes the node from the structure.
-When removing person A, their children need to be promoted up a level and we need to ensure their children have higher priority than A's siblings.
+When removing person A, their children need to be promoted up a level and we need to ensure their children have higher priority than A's younger siblings.
 We can do this by replacing person A with their children in their sibling list.
 
 For example, suppose Hogan has 3 children in this order: A, B, C.
@@ -81,7 +87,7 @@ Each node can store a reference to its parent so we can obtain the parent and mo
 The last trick is we need know the position of the node in relation to its siblings.
 We can accomplish by also storing position index in each node, letting us know their sibling rank.
 
-To make removals easier, we instantiate our structure with a dummy root node where the first child of the root node be the CEO.
+To make removals easier, we instantiate our structure with a dummy root node where the first child of the root node is the CEO.
 
 === Get CEO method
 The get CEO method is now the simplest part, just return the first child of the root node.
