@@ -7,3 +7,4 @@ Explanations and solutions to interview questions
 * xref:extreme_connect_4.adoc[Extreme Connect 4]
 * xref:middle_queue.adoc[Front Middle Back Queue]
 * xref:succession.adoc[Succession]
+* xref:conversions.adoc[Unit Conversions]

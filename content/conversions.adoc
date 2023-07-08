@@ -1,0 +1,61 @@
+= Unit Conversions
+
+== Question
+
+Given a series of unit conversions of this form:
+
+----
+1 ft = 12 in
+1 yd = 3 ft
+1 cup = 8 oz
+1 pint = 2 cups
+----
+
+Create a system that can convert qty of one unit to another unit. For example:
+
+`2 yd = ___ in` would return 72
+
+== Explanation
+
+Let's go through the example in the problem.
+We can convert `2 yd` to `ft` by multiplying the quantity 2 by 3 to get `6 ft`.
+Similarly, we can convert `6 ft` to `in` by multiplying quantity 6 by 12 to get `72 in`.
+If we know the intermediate units to convert our quantity to, getting our answer just requires some multiplication.
+So how do we determine the intermediate units?
+We have to search for a path between our start unit and our end unit.
+Graph searching algorithms are good options for tasks like this.
+Let each unit be a node in the graph and an edge between node `u` and node `v` means `u` can be converted to `v`.
+The edges also have our scalar values for conversions.
+Here's a graph for our example problem:
+
+TODO
+
+Now what should our graph search algorithm be?
+Both DFS and BFS can work here, but we should discuss the trade-offs.
+BFS is guaranteed to find the shortest path (i.e., fewest node conversions),
+Fewer conversions means less floating point multiplication, so let's use that.
+So our solution is now:
+
+* Convert our units to a conversion graph
+    ** Our graph is being directed, each edge can be reversed by dividing by the scalar rather than multiplying.
+* Use BFS to find a path between the starting unit and the ending unit
+    ** If no path exists, we cannot convert between these units and should notify the client somehow (throw an exception)
+* When constructing the path, keep track of the scalars so we can multiply the initial quantity for our answer.
+
+=== How do we do BFS here?
+
+We will use a standard BFS approach:
+
+TODO: explain BFS
+
+. Create a search queue for units that we can try to convert to
+TODO: 
+. Maintain a visited set so we do not search through a 
+
+== Solution
+
+.Conversions.java
+[source,java]
+----
+include::src/Conversions.java[]
+----
