@@ -42,6 +42,15 @@ So our solution is now:
     ** If no path exists, we cannot convert between these units and should notify the client somehow (throw an exception)
 * When constructing the path, keep track of the scalars so we can multiply the initial quantity for our answer.
 
+=== How do we do BFS here?
+
+We will use a standard BFS approach:
+
+TODO: explain BFS
+
+. Create a search queue for units that we can try to convert to
+TODO: 
+. Maintain a visited set so we do not search through a 
 
 == Solution
 
