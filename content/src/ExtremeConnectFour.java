@@ -14,24 +14,24 @@ class ExtremeConnectFour {
 
     private final Map<Integer, List<Color>> board = new HashMap<>();
 
-
     public Optional<Color> move(int columnIndex, Color chipColor) {
         // Place chip
         board.computeIfAbsent(columnIndex, k -> new ArrayList<>()).add(0, chipColor);
 
         // Check vertical
-        var column = board.getOrDefault(columnIndex, new ArrayList<>());
-        var truncatedColumn = column.subList(0, Math.min(WIN_COUNT, column.size()));
+        List<Color> column = board.getOrDefault(columnIndex, new ArrayList<>());
+        List<Color> truncatedColumn = column.subList(0, Math.min(WIN_COUNT, column.size()));
         if (WIN_CONDITIONS.get(chipColor).equals(truncatedColumn)) {
             return Optional.of(chipColor);
         }
 
         // Check horizontal
         for (int r = 0; r < column.size(); r++) {
-            var leftBound = columnIndex - WIN_COUNT + 1;
-            var rightBound = columnIndex + WIN_COUNT - 1;
-            var row = range(r, leftBound, rightBound);
+            int leftBound = columnIndex - WIN_COUNT + 1;
+            int rightBound = columnIndex + WIN_COUNT - 1;
+            List<Color> row = range(r, leftBound, rightBound);
             for (var entry: WIN_CONDITIONS.entrySet()) {
+                // Check if a win is inside our row
                 if (Collections.indexOfSubList(row, entry.getValue()) != -1) {
                     return Optional.of(entry.getKey());
                 }
@@ -50,7 +50,7 @@ class ExtremeConnectFour {
     }
 
     private Color get(int columnIndex, int rowIndex) {
-        var column = board.getOrDefault(columnIndex, new ArrayList<>());
+        List<Color> column = board.getOrDefault(columnIndex, new ArrayList<>());
         if (column.size() <= rowIndex) {
             return null;
         }
