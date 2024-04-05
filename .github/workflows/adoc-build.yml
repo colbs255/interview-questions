@@ -27,7 +27,7 @@ jobs:
     - name: Install Nix
       uses: cachix/install-nix-action@v25
     - name: Generate Site
-      run: nix develop --command make
+      run: nix develop --command just
     - name: Setup Pages
       uses: actions/configure-pages@v3
     - name: Upload artifact

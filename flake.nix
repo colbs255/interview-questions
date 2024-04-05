@@ -13,7 +13,7 @@
     {
       devShells = forEachSupportedSystem ({ pkgs }: {
         default = pkgs.mkShell {
-          packages = with pkgs; [ asciidoctor ];
+          packages = with pkgs; [ asciidoctor just ];
         };
       });
     };

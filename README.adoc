@@ -7,4 +7,4 @@ Interview questions and my solutions
 
 - Requires `nix`
 - Run `nix develop` to setup dev environment
-- Run `make`
+- Run `just`
